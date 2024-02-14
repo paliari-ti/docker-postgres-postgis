@@ -1,16 +1,20 @@
-FROM postgres:11.6
+FROM postgres:12-bullseye
 
-LABEL manteiner="Daniel Fernando Lourusso <dflourusso@gmail.com>"
+LABEL maintainer="Paliari Engenharia de Software" \
+      org.opencontainers.image.description="PostGIS 3.4.1+dfsg-1.pgdg110+1 spatial database extension with PostgreSQL 12 bullseye" \
+      org.opencontainers.image.source="https://github.com/postgis/docker-postgis"
 
 ENV POSTGIS_MAJOR 3
-ENV POSTGIS_VERSION 3.0.0+dfsg-2~exp1.pgdg90+1
+ENV POSTGIS_VERSION 3.4.1+dfsg-1.pgdg110+1
 
 RUN apt-get update \
+      && apt-cache showpkg postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR \
       && apt-get install -y --no-install-recommends \
+           ca-certificates \
            postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR=$POSTGIS_VERSION \
-           postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR-scripts=$POSTGIS_VERSION \
-           postgis=$POSTGIS_VERSION \
+           postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR-scripts \
       && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /docker-entrypoint-initdb.d
-COPY ./initdb-postgis.sh /docker-entrypoint-initdb.d/postgis.sh
+COPY ./initdb-postgis.sh /docker-entrypoint-initdb.d/10_postgis.sh
+COPY ./update-postgis.sh /usr/local/bin
