@@ -1,4 +1,4 @@
-## A docker image with postgres 12 and postgis 3.0
+## A docker image with postgres 13 and postgis 3.4
 
 ```bash
 docker pull paliari/postgres-postgis:latest

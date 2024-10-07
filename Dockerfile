@@ -1,11 +1,11 @@
-FROM postgres:12-bullseye
+FROM postgres:13-bullseye
 
 LABEL maintainer="Paliari Engenharia de Software" \
-      org.opencontainers.image.description="PostGIS 3.4.1+dfsg-1.pgdg110+1 spatial database extension with PostgreSQL 12 bullseye" \
+      org.opencontainers.image.description="PostGIS 3.4.3+dfsg-2.pgdg110+1 spatial database extension with PostgreSQL 13 bullseye" \
       org.opencontainers.image.source="https://github.com/postgis/docker-postgis"
 
 ENV POSTGIS_MAJOR 3
-ENV POSTGIS_VERSION 3.4.1+dfsg-1.pgdg110+1
+ENV POSTGIS_VERSION 3.4.3+dfsg-2.pgdg110+1
 
 RUN apt-get update \
       && apt-cache showpkg postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR \
